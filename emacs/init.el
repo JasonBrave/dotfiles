@@ -199,6 +199,7 @@
   :mode ("\\.v\\'" "\\.vh\\'" "\\.sv\\'" "\\.svh\\'")
   :custom
   (verilog-auto-newline nil)
+  (verilog-auto-indent-on-newline nil)
   (verilog-case-indent 4)
   (verilog-indent-level 4)
   (verilog-indent-level-behavioral 4)

@@ -6,6 +6,8 @@ alias ec="$EDITOR $HOME/.zshrc" # edit .zshrc
 alias sc="source $HOME/.zshrc"  # reload zsh configuration
 alias e="emacsclient --alternate-editor= -c -nw"
 alias ee="emacsclient --alternate-editor= -c"
+alias g="git"
+alias cl="clear"
 
 # Modern Completition
 zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
