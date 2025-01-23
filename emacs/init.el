@@ -150,7 +150,13 @@
   (org-icalendar-use-scheduled '(event-if-todo))
   (org-icalendar-timezone "America/Toronto")
   (org-export-with-broken-links t)
-  (org-todo-keywords '((sequence "TODO(t)" "BLOCKED(b)" "WIP(w)" "|" "DONE(d)" "DELEGATED(e)" "UNCOMPLETE(u)" "CANCELED(c)"))))
+  (org-todo-keywords '((sequence "TODO(t)" "BLOCKED(b)" "WIP(w)" "|" "DONE(d)" "DELEGATED(e)" "UNCOMPLETE(u)" "CANCELED(c)")))
+  (org-priority-faces '((?1 . (:foreground "#F8C300"))
+						(?2 . (:foreground "#00923F"))
+						(?3 . (:foreground "#31A1DB"))
+						(?4 . (:foreground "#A21A68"))
+						(?5 . (:foreground "#FF7D24"))
+						(?6 . (:foreground "#8A999A")))))
 
 (use-package toc-org
   :defer t
@@ -163,7 +169,7 @@
   (org-roam-database-connector 'sqlite-builtin)
   :bind (("M-n l" . org-roam-buffer-toggle)
          ("M-n f" . org-roam-node-find)
-         ("C-c i" . org-roam-node-insert)
+         ("M-n i" . org-roam-node-insert)
 		 ("M-n c" . org-roam-dailies-capture-today))
   :init
   (org-roam-db-autosync-mode))
