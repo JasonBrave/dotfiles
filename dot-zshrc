@@ -2,8 +2,6 @@
 alias ls='ls --color=auto'
 alias ll='ls -lah --color=auto'
 alias grep='grep --color=auto'
-alias ec="$EDITOR $HOME/.zshrc" # edit .zshrc
-alias sc="source $HOME/.zshrc"  # reload zsh configuration
 alias e="emacsclient --alternate-editor= -c -nw"
 alias ee="emacsclient --alternate-editor= -c"
 alias g="git"
@@ -12,14 +10,19 @@ alias cl="clear"
 # Modern Completition
 zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
 zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]} r:|[._-]=* r:|=*' 'm:{[:lower:]}={[:upper:]} r:|[._-]=* r:|=* l:|=*' 'm:{[:lower:]}={[:upper:]} r:|[._-]=* r:|=* l:|=*' 'm:{[:lower:]}={[:upper:]} >'
-zstyle :compinstall filename '/home/jason/.zshrc'
+zstyle :compinstall filename '$HOME/.zshrc'
 
 autoload -Uz compinit
 compinit
 
-# antidote - manage plugins
-source /usr/share/zsh-antidote/antidote.zsh
+# antidote - Plugin Manager
+if [ -d '/usr/share/zsh-antidote' ]; then
+	source /usr/share/zsh-antidote/antidote.zsh
+else
+	source $HOME/.antidote/antidote.zsh
+fi
 antidote load
 
-path+=('/home/jason/projects/prototype/flow-scripts')
+# Environment Variables
+path=("$HOME/scripts" $path)
 export PATH
