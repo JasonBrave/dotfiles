@@ -30,7 +30,7 @@
 (setq-default auto-save-default nil)
 (setq-default make-backup-files nil)
 (defalias 'yes-or-no-p 'y-or-n-p)
-(setq read-process-output-max (* 10 1024 1024))
+(setq read-process-output-max (* 20 1024 1024))
 
 ;; Default Style Config
 (setq-default c-basic-offset 4)
@@ -51,6 +51,8 @@
   :init
   (setq projectile-project-search-path '(("~/projects" . 2)))
   :custom
+  (projectile-enable-caching t)
+  (projectile-track-known-projects-automatically nil)
   (projectile-switch-project-action 'treemacs-add-and-display-current-project-exclusively)
   (projectile-find-file-hook 'treemacs-add-and-display-current-project-exclusively)
   (projectile-find-dir-hook 'treemacs-add-and-display-current-project-exclusively)
@@ -65,7 +67,7 @@
   (dashboard-setup-startup-hook)
   :custom
   (dashboard-agenda-prefix-format "%i %-12:c")
-  (dashboard-footer-messages '("always_ff @(posedge clk or negedge rst_n)"))
+  (dashboard-footer-messages '("Take public transit"))
   (dashboard-agenda-sort-strategies '(priority-up time-up))
   (dashboard-startup-banner 'logo)
   (dashboard-items '((recents   . 5)
@@ -100,11 +102,8 @@
   :custom
   (company-idle-delay 0)
   (company-minimum-prefix-length 1)
-  (company-backends '(
-					  company-capf
-					  (company-c-headers company-clang company-keywords)
-					  company-semantic
-					  company-cmake
+  (company-backends '(company-capf
+					  company-clang
 					  company-files))
   (company-clang-executable "/usr/bin/clang-19")
   :config
@@ -158,10 +157,6 @@
 						(?5 . (:foreground "#FF7D24"))
 						(?6 . (:foreground "#8A999A")))))
 
-(use-package toc-org
-  :defer t
-  :commands toc-org-insert-toc)
-
 (use-package org-roam
   :defer t
   :custom
@@ -184,12 +179,6 @@
   :mode "\\.md\\'")
 
 (use-package git-modes)
-
-;; Embedded C Programming
-(use-package company-c-headers
-  :custom
-  (company-c-headers-path-system
-   '("/usr/include/" "/usr/local/include/")))
 
 ;; Other Programming
 (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
@@ -217,9 +206,21 @@
 (use-package verilog-ext
   :hook ((verilog-mode . verilog-ext-mode))
   :custom
-  (verilog-ext-feature-list '(hideshow capf imenu hierarchy xref beautify hideshow font-lock))
-  :config
-  (verilog-ext-mode-setup))
+  (verilog-ext-feature-list '(font-lock
+							  xref
+							  capf
+							  hierarchy
+							  flycheck
+							  beautify
+							  navigation
+							  formatter
+							  imenu
+							  which-func
+							  hideshow
+							  typedefs
+							  ports)))
+
+(setq verilog-ext-project-alist '())
 
 (use-package vhdl-mode
   :mode ("\\.vhd\\'" "\\.vhdl\\'")
@@ -257,6 +258,8 @@
 (dir-locals-set-class-variables 'lsp-project
 								`((c-mode . ((eval . (lsp-deferred))))
 								  (c++-mode . ((eval . (lsp-deferred))))
+								  (c-ts-mode . ((eval . (lsp-deferred))))
+								  (c++-ts-mode . ((eval . (lsp-deferred))))
 								  (java-mode . ((eval . (lsp-deferred))))
 								  (js-mode . ((eval . (lsp-deferred))))
 								  (python-ts-mode . ((eval . (lsp-deferred))))
@@ -308,13 +311,15 @@
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 (global-set-key [f8] 'display-line-numbers-mode)
 
+;; Which function
+(add-hook 'prog-mode-hook 'which-function-mode)
+
 ;; Project specific configuration
 (mapc 'load-file (file-expand-wildcards "~/.emacs.d/project-config/*.el"))
-(mapc 'load-file (file-expand-wildcards "~/.emacs.d/repo-config/*.el"))
 
 ;; End of start-up and start-up profiling
 (garbage-collect)
-(setq gc-cons-threshold (* 50 1024 1024))
+(setq gc-cons-threshold (* 100 1024 1024))
 
 (defun display-startup-time ()
   (message "Emacs loaded on %s in %s with %d garbage collections."
