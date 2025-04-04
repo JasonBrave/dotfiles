@@ -13,7 +13,7 @@ emacs/bookmarks
 emacs/eshell
 emacs/verilog-ext
 emacs/tramp
-emacs/recentf
+emacs/recentf.eld
 emacs/tree-sitter
 emacs/project-config
 emacs/repo-config

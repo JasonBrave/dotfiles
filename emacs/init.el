@@ -215,7 +215,6 @@
 							  navigation
 							  formatter
 							  imenu
-							  which-func
 							  hideshow
 							  typedefs
 							  ports)))
@@ -232,6 +231,7 @@
 (add-to-list 'auto-mode-alist '("\\.f\\'" . text-mode))
 (add-to-list 'auto-mode-alist '("\\.vc\\'" . text-mode))
 (add-to-list 'auto-mode-alist '("\\.sdc\\'" . tcl-mode))
+(add-to-list 'auto-mode-alist '("\\.ipxact\\'" . xml-mode))
 
 ;; Language Server Protocol
 (use-package lsp-mode
@@ -260,10 +260,11 @@
 								  (c++-mode . ((eval . (lsp-deferred))))
 								  (c-ts-mode . ((eval . (lsp-deferred))))
 								  (c++-ts-mode . ((eval . (lsp-deferred))))
-								  (java-mode . ((eval . (lsp-deferred))))
-								  (js-mode . ((eval . (lsp-deferred))))
+								  (rust-ts-mode . ((eval . (lsp-deferred))))
+								  (verilog-mode . ((eval . (lsp-deferred))))
 								  (python-ts-mode . ((eval . (lsp-deferred))))
-								  (rust-ts-mode . ((eval . (lsp-deferred))))))
+								  (java-mode . ((eval . (lsp-deferred))))
+								  (js-mode . ((eval . (lsp-deferred))))))
 
 ;; Source Formatting
 (use-package clang-format
@@ -281,6 +282,11 @@
 	  (progn
 		(message "Formatting with clang-format")
 		(clang-format-buffer))
+	  ))
+   ((eq major-mode 'rust-ts-mode)
+	(progn
+	  (message "Formatting with rust-analyzer")
+	  (lsp-format-buffer)
 	  ))
    ((eq major-mode 'java-mode)
 	(progn
@@ -310,9 +316,6 @@
 ;; Line numbers
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 (global-set-key [f8] 'display-line-numbers-mode)
-
-;; Which function
-(add-hook 'prog-mode-hook 'which-function-mode)
 
 ;; Project specific configuration
 (mapc 'load-file (file-expand-wildcards "~/.emacs.d/project-config/*.el"))
