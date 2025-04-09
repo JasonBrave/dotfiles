@@ -1,4 +1,4 @@
-;; package.el and native compile
+;; package.el and native compile configuration
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (setq package-native-compile t)
@@ -11,32 +11,31 @@
 (setq use-package-compute-statistics t)
 (setq use-package-always-ensure t)
 
-;; Emacs custom
-(unless (file-exists-p "~/.emacs.d/custom.el")
-  (make-empty-file "~/.emacs.d/custom.el"))
-(setq custom-file "~/.emacs.d/custom.el")
-(load custom-file)
-
-;; Basic editor config
-(cua-mode)
-(electric-pair-mode)
-(xterm-mouse-mode)
-(tool-bar-mode -1)
-(setq inhibit-startup-screen t)
-(set-default-coding-systems 'utf-8)
-(global-auto-revert-mode)
-(setq-default backward-delete-char-untabify-method nil)
-(setq-default compilation-scroll-output t)
-(setq-default auto-save-default nil)
-(setq-default make-backup-files nil)
-(defalias 'yes-or-no-p 'y-or-n-p)
-(setq read-process-output-max (* 20 1024 1024))
-
-;; Default Style Config
-(setq-default c-basic-offset 4)
-(setq-default sgml-basic-offset 4)
-(setq-default tab-width 4)
-(setq-default indent-tabs-mode t)
+;; Emacs built-in variables
+(use-package emacs
+  :init
+  (unless (file-exists-p "~/.emacs.d/custom.el")
+	(make-empty-file "~/.emacs.d/custom.el"))
+  (setq custom-file "~/.emacs.d/custom.el")
+  (load custom-file)
+  (setq frame-title-format '("%b - GNU Emacs"))
+  :custom
+  (inhibit-startup-screen t)
+  (backward-delete-char-untabify-method nil)
+  (compilation-scroll-output t)
+  (auto-save-default nil)
+  (make-backup-files nil)
+  (tool-bar-mode nil)
+  (tab-width 4)
+  (indent-tabs-mode t)
+  :config
+  (set-default-coding-systems 'utf-8)
+  (global-auto-revert-mode)
+  (cua-mode)
+  (electric-pair-mode)
+  (xterm-mouse-mode)
+  (defalias 'yes-or-no-p 'y-or-n-p)
+  (setq read-process-output-max (* 1 1024 1024)))
 
 ;; Theme and Icons
 (use-package all-the-icons)
@@ -203,24 +202,6 @@
   (verilog-indent-level-module 4)
   :pin gnu)
 
-(use-package verilog-ext
-  :hook ((verilog-mode . verilog-ext-mode))
-  :custom
-  (verilog-ext-feature-list '(font-lock
-							  xref
-							  capf
-							  hierarchy
-							  flycheck
-							  beautify
-							  navigation
-							  formatter
-							  imenu
-							  hideshow
-							  typedefs
-							  ports)))
-
-(setq verilog-ext-project-alist '())
-
 (use-package vhdl-mode
   :mode ("\\.vhd\\'" "\\.vhdl\\'")
   :custom
@@ -245,12 +226,6 @@
   :defer t
   :custom
   (lsp-ui-doc-delay 0.05))
-
-(use-package lsp-java
-  :defer t
-  :custom
-  (lsp-java-autobuild-enabled nil)
-  (lsp-java-jdt-download-url "https://download.eclipse.org/jdtls/snapshots/jdt-language-server-latest.tar.gz"))
 
 (use-package lsp-pyright
   :defer t)
