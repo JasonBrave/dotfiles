@@ -2,7 +2,6 @@
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (setq package-native-compile t)
-(setq native-comp-async-report-warnings-errors nil)
 (package-initialize)
 
 ;; use-package configuration
@@ -10,6 +9,7 @@
 (setq use-package-verbose t)
 (setq use-package-compute-statistics t)
 (setq use-package-always-ensure t)
+(setq use-package-always-demand (daemonp))
 
 ;; Emacs built-in variables
 (use-package emacs
@@ -80,17 +80,25 @@
   (doom-modeline-mode 1))
 
 (use-package treemacs
-  :after (treemacs-all-the-icons)
   :bind ([f7] . treemacs)
   :config
-  (treemacs-load-theme "all-the-icons")
   (with-eval-after-load 'treemacs
 	(define-key treemacs-mode-map [mouse-1] #'treemacs-single-click-expand-action))
   :custom
-  (treemacs-width 20)
+  (treemacs-width 25)
   (treemacs-hide-gitignored-files-mode t)
-  (treemacs-follow-mode t)
-  (treemacs-indent-guide-style line))
+  (treemacs-follow-mode t))
+
+(use-package treemacs-all-the-icons
+  :after (treemacs all-the-icons)
+  :config
+  (treemacs-load-theme "all-the-icons"))
+
+(use-package treemacs-projectile
+  :after (treemacs projectile))
+
+(use-package treemacs-magit
+  :after (treemacs magit))
 
 (use-package magit
   :commands magit-status)
@@ -122,18 +130,8 @@
   :init
   (counsel-mode 1))
 
-(use-package treemacs-all-the-icons
-  :after (treemacs all-the-icons))
-
-(use-package treemacs-projectile
-  :after (treemacs projectile))
-
-(use-package treemacs-magit
-  :after (treemacs magit))
-
 ;; Notetaking and To-Do
 (use-package org
-  :defer t
   :mode ("\\.org\\'" . org-mode)
   :pin gnu
   :bind (("M-o" . org-agenda))
@@ -157,7 +155,6 @@
 						(?6 . (:foreground "#8A999A")))))
 
 (use-package org-roam
-  :defer t
   :custom
   (org-roam-directory "~/notes")
   (org-roam-database-connector 'sqlite-builtin)
@@ -216,19 +213,16 @@
 
 ;; Language Server Protocol
 (use-package lsp-mode
-  :defer t
   :commands lsp
   :custom
   (lsp-diagnostics-provider :flycheck)
   (lsp-clangd-binary-path "/usr/bin/clangd-19"))
 
 (use-package lsp-ui
-  :defer t
   :custom
   (lsp-ui-doc-delay 0.05))
 
-(use-package lsp-pyright
-  :defer t)
+(use-package lsp-pyright)
 
 (dir-locals-set-class-variables 'lsp-project
 								`((c-mode . ((eval . (lsp-deferred))))
