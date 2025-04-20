@@ -1,3 +1,5 @@
+;;; ...  -*- lexical-binding: t -*-
+
 ;; package.el and native compile configuration
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
