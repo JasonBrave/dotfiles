@@ -178,6 +178,9 @@
 
 (use-package git-modes)
 
+(use-package yaml-ts-mode
+  :mode ("\\.yml\\'" "\\.yaml\\'"))
+
 ;; Other Programming
 (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
 
