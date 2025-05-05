@@ -10,6 +10,7 @@ emacs/.dap-breakpoints
 emacs/.lsp-session-v1
 emacs/.org-id-locations
 emacs/bookmarks
+emacs/bookmarks.eld
 emacs/eshell
 emacs/verilog-ext
 emacs/tramp

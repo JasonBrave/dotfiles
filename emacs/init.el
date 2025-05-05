@@ -84,11 +84,11 @@
 (use-package treemacs
   :bind ([f7] . treemacs)
   :config
+  (treemacs-hide-gitignored-files-mode)
   (with-eval-after-load 'treemacs
 	(define-key treemacs-mode-map [mouse-1] #'treemacs-single-click-expand-action))
   :custom
   (treemacs-width 25)
-  (treemacs-hide-gitignored-files-mode t)
   (treemacs-follow-mode t))
 
 (use-package treemacs-all-the-icons
@@ -181,8 +181,12 @@
 (use-package yaml-ts-mode
   :mode ("\\.yml\\'" "\\.yaml\\'"))
 
-;; Other Programming
+;; Programming
 (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
+
+(use-package cc-mode
+  :custom
+  (c-basic-offset 4))
 
 (use-package rust-ts-mode
   :mode "\\.rs\\'")
