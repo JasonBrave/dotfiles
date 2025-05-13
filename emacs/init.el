@@ -231,7 +231,7 @@
   (lsp-clangd-binary-path "/usr/bin/clangd-19")
   :config
   (lsp-register-client (make-lsp-client
-						:new-connection (lsp-stdio-connection `("/home/jason/projects/librechips/verilogd/target/debug/verilogd" "/home/jason/verilogd.log" "/home/jason/srad-gnss.f"))
+						:new-connection (lsp-stdio-connection `("/home/jason/projects/librechips/verilogd/target/debug/verilogd"))
 						:activation-fn (lsp-activate-on "verilog")
 						:server-id 'verilogd)))
 
