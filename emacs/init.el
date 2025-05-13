@@ -169,7 +169,7 @@
 
 ;; Non-programming file modes
 (use-package pdf-tools
-  :magic ("%PDF" . pdf-view-mode)
+  :mode ("\\.pdf\\'" . pdf-view-mode)
   :config
   (pdf-tools-install :no-query))
 
@@ -193,6 +193,9 @@
 
 (use-package nasm-mode
   :mode "\\.asm\\'")
+
+(use-package octave
+  :mode ("\\.m\\'" . octave-mode))
 
 ;; Digital Design
 (use-package verilog-mode
@@ -240,9 +243,7 @@
 								  (c++-ts-mode . ((eval . (lsp-deferred))))
 								  (rust-ts-mode . ((eval . (lsp-deferred))))
 								  (verilog-mode . ((eval . (lsp-deferred))))
-								  (python-ts-mode . ((eval . (lsp-deferred))))
-								  (java-mode . ((eval . (lsp-deferred))))
-								  (js-mode . ((eval . (lsp-deferred))))))
+								  (python-ts-mode . ((eval . (lsp-deferred))))))
 
 ;; Source Formatting
 (use-package clang-format
