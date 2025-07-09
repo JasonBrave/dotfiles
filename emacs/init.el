@@ -44,7 +44,7 @@
 
 (use-package doom-themes
   :init
-  (load-theme 'doom-acario-dark t))
+  (load-theme 'doom-material-dark t))
 
 ;; General Packages
 (use-package projectile
@@ -114,7 +114,7 @@
   (company-backends '(company-capf
 					  company-clang
 					  company-files))
-  (company-clang-executable "/usr/bin/clang-19")
+  (company-clang-executable "/usr/bin/clang-21")
   :config
   (company-tng-mode))
 
@@ -122,7 +122,7 @@
   :init
   (global-flycheck-mode)
   :custom
-  (flycheck-c/c++-clang-executable "/usr/bin/clang-19"))
+  (flycheck-c/c++-clang-executable "/usr/bin/clang-21"))
 
 (use-package ivy
   :init
@@ -228,7 +228,7 @@
   :commands lsp
   :custom
   (lsp-diagnostics-provider :flycheck)
-  (lsp-clangd-binary-path "/usr/bin/clangd-19"))
+  (lsp-clangd-binary-path "/usr/bin/clangd-21"))
 
 (use-package lsp-ui
   :custom
@@ -248,7 +248,7 @@
 ;; Source Formatting
 (use-package clang-format
   :custom
-  (clang-format-executable "/usr/bin/clang-format-19"))
+  (clang-format-executable "/usr/bin/clang-format-21"))
 
 (defun default-format-buffer ()
   (interactive)
